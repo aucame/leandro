@@ -1,0 +1,25 @@
+{
+  "name": "site",
+  "version": "0.0.0",
+  "description": "land-page",
+  "main": "index.html",
+  "authors": [
+    "Aurelio Carlos Menezes"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "angularjs#~1.4.6",
+    "angular-upload": "~1.0.12",
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "angular-youtube-mb": "~1.1.1",
+    "ngMask": "angular-mask#~3.0.16"
+  }
+}

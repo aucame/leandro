@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html ng-app="landpage" ng-controller="lpcontroller" >
+
+<head>
+  <title>eBook contra CRISE</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="bower_components\bootstrap\dist\css\bootstrap.min.css">
+
+  <script src="bower_components\angular\angular.min.js"></script>
+  <script src="bower_components\jquery\dist\jquery.min.js"></script>
+  <script src="bower_components\bootstrap\dist\js\bootstrap.min.js"></script>
+  <script src='bower_components\ngMask\dist\ngMask.min.js'></script>
+
+  <script src="js\app.js"></script>
+
+</head>
+
+<body>
+
+<div id="container">
+
+  <header>
+    <div class="wrapper">
+      <figure>
+        <img src="{{banner01}}" alt="" />
+      </figure>
+
+      <hgroup>
+        <h1>{{titulo01}}</h1>
+        <h2>{{subtit01}}</h2>
+      </hgroup>
+
+    </div>
+  </header>
+
+  <section class="clearfix">
+    <div class="wrapper">
+
+      <div id="content" class="left">
+
+        <figure>
+          <img src="{{banner02}}">
+        </figure>
+
+        <div>
+
+          <h1 align="center">{{titulo02}}</h1>
+          <p class="textomenor">
+            {{texto}}
+          </p>
+
+        </div>
+
+      </div>￼
+
+      <div id="conversion" class="right">
+        <header>
+          <h2>{{titulo03}}</h2>
+          <p>{{subtit03}}</p>
+        </header>
+
+        <section>
+<form name="formulario">
+          <label>Nome* <span class="error" ng-show="formulario.userNome.$error.required">Obrigatório</span></label>
+          <input type="text" repeat="60" mask="%" name="userNome" id="userNome" placeholder="Informe o nome" class="form-control" ng-model="user.nome" required>
+
+          <label>Email* <span class="error" ng-show="formulario.userEmail.$error.required">Obrigatório</span></label>
+          <input type="email" repeat="60" mask="%" name="userEmail" id="userEmail" placeholder="Informe o email" class="form-control" ng-model="user.email" required>
+
+          <label>Telefone* <span class="error" ng-show="formulario.userFone.$error.required">Obrigatório</span></label>
+          <input type="text" mask="(99) 9999-9999" name="userFone" id="userFone" placeholder="Informe o Telefone" class="form-control" ng-model="user.fone" required>
+
+          <label>Empresa* <span class="error" ng-show="formulario.userEmpresa.$error.required">Obrigatório</span></label>
+          <input type="text" repeat="60" mask="%" name="userEmpresa" id="userEmpresa" placeholder="Informe a Empresa" class="form-control" ng-model="user.empresa" required>
+
+          <label>WebSite* <span class="error" ng-show="formulario.userSite.$error.required">Obrigatório</span></label>
+          <input type="text" repeat="60" mask="%" name="userSite" id="userSite" placeholder="Informe o Site" class="form-control" ng-model="user.site" required>
+
+          <button type="button" name="button" ng-click="gravar(user)" class="btn btn-warning btn-block espaco"><h4>{{botao}}<h4></button>
+</form>
+          <br>
+          <p class="notice">Estamos comprometidos em resguardar suas informações.
+            <a href="{{privacidade}}" target="_blank">Conheça nossa Política de Privacidade</a>
+          </p>
+        </section>
+      </div>
+
+    </div>
+  </section>
+
+</div>
+
+</body>
+</html>
