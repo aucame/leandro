@@ -9,10 +9,7 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "node_modules",
     "bower_components",
-    "test",
-    "tests"
   ],
   "dependencies": {
     "angular": "angularjs#~1.4.6",
