@@ -1,81 +1,182 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="demo">
-    <head>
-        <meta charset="utf-8">
-        <title>AngularJS ui-uploader</title>
+<html>
+<head>
+	<title>teste</title>
+	<meta charset="UTF-8">
 
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.1/angular.js"></script>
-        <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="../bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="styleSheet" type="text/css" href="lib/uigrid/ui-grid.css"/>
 
-        <!-- ui-uploader files -->
-        <script src="../dist/uploader.js"></script>
-    </head>
+	<script src="../bower_components/dist/js/angular.js"></script>
+    <script src="lib/uigrid/ui-grid.js"></script>
 
-    <body class="container">
-        <script>
-            var app = angular.module('demo', ['ui.uploader']);
-            app.controller('uploaderCtrl', function($scope, $log, uiUploader) {
-                $scope.btn_remove = function(file) {
-                    $log.info('deleting=' + file);
-                    uiUploader.removeFile(file);
-                };
-                $scope.btn_clean = function() {
-                    uiUploader.removeAll();
-                };
-                $scope.btn_upload = function() {
-                    $log.info('uploading...');
-                    uiUploader.startUpload({
-                        url: 'http://realtica.org/ng-uploader/demo.html',
-                        concurrency: 2,
-                        onProgress: function(file) {
-                            $log.info(file.name + '=' + file.humanSize);
-                            $scope.$apply();
-                        },
-                        onCompleted: function(file, response) {
-                            $log.info(file + 'response' + response);
-                        }
-                    });
-                };
-                $scope.files = [];
-                var element = document.getElementById('file1');
-                element.addEventListener('change', function(e) {
-                    var files = e.target.files;
-                    uiUploader.addFiles(files);
-                    $scope.files = uiUploader.getFiles();
-                    $scope.$apply();
-                });
-            });
-        </script>
-        <div id="uploader" ng-controller="uploaderCtrl">
-            <div class="page-header">
-                <h1>Uploader</h1>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <h3>What?</h3>
-                    <p>Upload multiple files at the same time. See <a href="http://realtica.org/ng-uploader/demo.html">demo with upload actually working</a>.</p>
+	<style>
+		.telanova{
+			width: 400px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 10px;
+		}
+		.telagrid{
+			width: 1100px;
+			margin-left: auto;
+			margin-right: auto;
+			margin-top: 10px;
+			height: 300px;
+		}
+	</style>
 
-                    <div class="well">
-                        <div>
-                            <div style="float:right;">
-                                <button ng-click="btn_upload()">Upload</button>
-                                <button ng-click="btn_clean()">Remove all</button>
-                            </div>
-                            <input type="file" id="file1" multiple/>
-                        </div>
-                        <div ng-repeat="file in files" style="margin-top: 20px;border-bottom-color: antiquewhite;border-bottom-style: double;">
-                            <div><span>{{file.name}}</span><div style="float:right;"><span>{{file.humanSize}}</span><a ng-click="btn_remove(file)" title="Remove from list to be uploaded"><i class="icon-remove"></i></a></div>
-                            </div>
-                            <progress style="width:400px;" value="{{file.loaded}}" max="{{file.size}}"></progress>
-                        </div>
-                    </div>
-                </div>
+<script>
+	var app = angular.module('myapp', ['ui.grid', 'ui.grid.cellNav', 'ui.grid.resizeColumns', 'ui.grid.edit', 'ui.grid.selection']);
 
-                <div class="col-md-6">
-                    <h3>How?</h3>
-                    <p>See <a href="https://github.com/angular-ui/ui-uploader/blob/master/demo/index.html">source of this demo</a>.</p>
-                </div>
-            </div>
-        </div>
-    </body>
+	app.controller('mycontroller', function($scope, $http) {
+
+			$scope.gridOptions = {
+				enableSorting: false,
+    			showGridFooter: true,
+				enableRowSelection: true,
+    			enableSelectAll: false,
+    			enableColumnResizing: true,
+    			//enableCellEditOnFocus: true,
+
+    			columnDefs: [
+      				{ field: 'codigo', enableCellEdit: false, minWidth: 50, width: 90, displayName: 'Codigo' },
+      				{ field: 'nome', enableCellEdit: false, minWidth: 120, width: 250, displayName: 'Nome' },
+      				{ field: 'endereco', enableCellEdit: false, minWidth: 120, width: 250, displayName: 'Endereço' },
+      				{ field: 'cidade', enableCellEdit: false, minWidth: 100, width: 150, displayName: 'Cidade' },
+      				{ field: 'cep', enableCellEdit: false, minWidth: 50, width: 100, displayName: 'CEP' },
+         			{ name: 'Editar/Deletar', enableCellEdit: false, width: 200,
+             		cellTemplate:'<button class="btn btn-primary" ng-click="grid.appScope.editcliente(row)">Editar</button>  <button class="btn btn-primary" ng-click="grid.appScope.delcliente(row)">Deletar</button>'  }
+    			],
+
+    			data: [
+    				{ 'codigo': "", "nome": "", "endereco": "", "cidade": "", "cep": "" }
+    			]
+
+  			};
+
+		$scope.gridOptions.onRegisterApi = function(gridApi){
+       		$scope.gridApi = gridApi;
+    	};
+
+    	$scope.novo = function() {
+    		$scope.cliente = { 'codigo': undefined, "nome": "", "endereco": "", "cidade": "", "cep": "" };
+    	};
+
+		$scope.gravar = function(cliente) {
+
+			if (cliente == undefined){
+				$scope.novo();
+				$scope.getcliente();
+			}
+
+			if (cliente.codigo == undefined){
+				//$http.post("http://localhost:8080/addcliente", $scope.cliente)
+				$http(
+					{
+						method: 	"post",
+						url: 		"http://localhost:8080/addcliente",
+						data: 		$scope.cliente,
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					})
+				.then(function(data,status,headers,config){
+					$scope.novo();
+					$scope.getcliente();
+				});
+			} else {
+//				$http.post("insert.php?action=upd_cliente", $scope.cliente)
+				$http({
+						method: 	"post",
+						url: 		"http://localhost:8080/updcliente",
+						data: 		$scope.cliente,
+						headers: {
+							'Content-Type': 'application/json'
+						}
+				}).then(function(data,status,headers,config){
+					$scope.novo();
+					$scope.getcliente();
+				});
+			}
+		};
+
+		$scope.getcliente = function() {
+//			$http.get("insert.php?action=get_cliente")
+			$http.get("http://localhost:8080/getclientes")
+			.then(function(response){
+				$scope.gridOptions.data = response.data;
+			}, function(error){
+				console.log("Error = " + error);
+			});
+		};
+
+		$scope.editcliente = function(row){
+
+			var id = row.entity.codigo;
+
+//			$http.post('insert.php?action=edit_cliente', { "id" : id }
+			$http.get('http://localhost:8080/getcliente/' + id
+			).then(function(response){
+
+				$scope.posts = response.data;
+
+				$scope.cliente = {
+					'codigo': 	$scope.posts[0]['codigo'],
+					'nome': 	$scope.posts[0]['nome'],
+					'endereco': $scope.posts[0]['endereco'],
+					'cidade': 	$scope.posts[0]['cidade'],
+					'cep': 		$scope.posts[0]['cep']
+				};
+
+			}, function(error){
+				console.log("Error = " + error);
+			});
+
+		};
+
+		$scope.delcliente = function(row){
+			var id = row.entity.codigo;
+//			$http.post('insert.php?action=del_cliente', { "id" : id }
+//			$http.post('http://localhost:8080/delcliente/' + id
+			$http({
+				method: 	"delete",
+				url: 		"http://localhost:8080/delcliente/" + id,
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				}
+			}).then(function(response){
+				$scope.novo();
+				$scope.getcliente();
+			}, function(error){
+				console.log("Error = " + error);
+			});
+
+		};
+
+		$scope.getcliente();
+
+	});
+</script>
+
+</head>
+<body ng-app="myapp"  ng-controller="mycontroller" >
+
+<div class="telanova">
+	<input type="text" maxlength="5" placeholder="Codigo" ng-model="cliente.codigo" class="form-control" disabled><br>
+	<input type="text" placeholder="Nome" ng-model="cliente.nome" class="form-control"><br>
+	<input type="text" placeholder="Endereço" ng-model="cliente.endereco" class="form-control"><br>
+	<input type="text" placeholder="Cidade" ng-model="cliente.cidade" class="form-control"><br>
+	<input type="text" placeholder="CEP" ng-model="cliente.cep" class="form-control"><br>
+	<input type="button" value="Novo" ng-click="novo()" class="btn btn-primary" />
+	<input type="button" value="Gravar" ng-click="gravar(cliente)" class="btn btn-primary" />
+</div>
+
+<br>
+
+<div>
+  <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-resize-columns ui-grid-edit ui-grid-selection class="telagrid" ></div>
+</div>
+
+</body>
 </html>
