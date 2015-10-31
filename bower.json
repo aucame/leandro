@@ -9,7 +9,7 @@
   "license": "MIT",
   "ignore": [
     "**/.*",
-    "bower_components",
+    "bower_components"
   ],
   "dependencies": {
     "angular": "angularjs#~1.4.6",
@@ -17,6 +17,7 @@
     "bootstrap": "~3.3.5",
     "jquery": "~2.1.4",
     "angular-youtube-mb": "~1.1.1",
-    "ngMask": "angular-mask#~3.0.16"
+    "ngMask": "angular-mask#~3.0.16",
+    "angular-ui-grid": "~3.0.7"
   }
 }
