@@ -4,19 +4,21 @@
     <meta charset="utf-8">
     <title>ADM</title>
 
+    <link rel="styleSheet" href="..\bower_components\uigrid\ui-grid.css"/>
+
     <script src="..\bower_components\jquery\dist\jquery.min.js" charset="utf-8"></script>
     <script src="..\bower_components\angular\angular.min.js" charset="utf-8"></script>
+    <script src="..\bower_components\uigrid\ui-grid.js"></script>
 
     <script src="app.js" charset="utf-8"></script>
 
   </head>
 
   <body ng-controller="AppCtrl">
-
-    {{nome}}
-
-teste
-
+    
+    <div>
+      <div ui-grid="gridOptions" ui-grid-cellNav ui-grid-resize-columns ui-grid-edit ui-grid-selection class="telagrid" ></div>
+    </div>
 
   </body>
 
