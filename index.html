@@ -70,10 +70,10 @@
           <input type="text" repeat="60" mask="%" name="userNome" id="userNome" placeholder="Informe o nome" class="form-control" ng-model="user.nome" required>
 
           <label>Email* <span class="error" ng-show="formulario.userEmail.$error.required">Obrigatório</span></label>
-          <input type="email" repeat="60" mask="%" name="userEmail" id="userEmail" placeholder="Informe o email" class="form-control" ng-model="user.email" required>
+          <input type="text" repeat="60" mask="%" name="userEmail" id="userEmail" placeholder="Informe o email" class="form-control" ng-model="user.email" required>
 
           <label>Telefone* <span class="error" ng-show="formulario.userFone.$error.required">Obrigatório</span></label>
-          <input type="text" mask="(99) 9999-9999" name="userFone" id="userFone" placeholder="Informe o Telefone" class="form-control" ng-model="user.fone" required>
+          <input type="text" mask="(99) 99999-9999" name="userFone" id="userFone" placeholder="Informe o Telefone" class="form-control" ng-model="user.fone" required>
 
           <label>Empresa* <span class="error" ng-show="formulario.userEmpresa.$error.required">Obrigatório</span></label>
           <input type="text" repeat="60" mask="%" name="userEmpresa" id="userEmpresa" placeholder="Informe a Empresa" class="form-control" ng-model="user.empresa" required>

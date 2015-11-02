@@ -9,6 +9,12 @@ app.use(function(req, res, next) {
 });
 */
 
+//            headers: {  'Access-Control-Allow-Credentials': 'true',
+//                        'Access-Control-Allow-Headers':     'origin, content-type, accept, authorization',
+//                        'Access-Control-Allow-Methods':     'GET, POST, PUT, DELETE, OPTIONS, HEAD',
+//                        'Access-Control-Allow-Origin':      '*'
+//            },
+
 app.controller('lpcontroller', function($scope, $http, $window) {
 
   $scope.ShowAlert = function () {
@@ -22,18 +28,21 @@ app.controller('lpcontroller', function($scope, $http, $window) {
   $scope.gravar = function(user) {
     if (user.nome != ""){
 
-        $http({
+        var teste =
+        {
             method: 'post',
-            url:    'http://localhost:8080/rotinas.php?action=add_cliente',
+            headers: {
+              'Access-Control-Allow-Credentials': 'true',
+              'Content-Type': 'application/json; charset=utf-8'
+            },
+            url:    'http://127.0.0.1:8080/rotinas.php?action=add_cliente',
             data:   $scope.user
-        }).then (function successCallback(response){
+        }
 
+        $http(teste).then(function successCallback(response){
           $scope.novo();
-
         }, function errorCallback(response){
-
           $scope.novo();
-
         });
 
       } else {
