@@ -32,7 +32,7 @@ $scope.gridOptions.onRegisterApi = function(gridApi){
 
   $scope.getcliente = function() {
 //			$http.get("insert.php?action=get_cliente")
-    $http.get("http://localhost:8080/getclientes")
+    $http.get("http://127.0.0.1:8080/rotinas.php?action=get_cliente")
     .then(function(response){
       $scope.gridOptions.data = response.data;
     }, function(error){
