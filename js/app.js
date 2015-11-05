@@ -1,20 +1,5 @@
 var app = angular.module('landpage',['ngMask']);
 
-/*
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-*/
-
-//            headers: {  'Access-Control-Allow-Credentials': 'true',
-//                        'Access-Control-Allow-Headers':     'origin, content-type, accept, authorization',
-//                        'Access-Control-Allow-Methods':     'GET, POST, PUT, DELETE, OPTIONS, HEAD',
-//                        'Access-Control-Allow-Origin':      '*'
-//            },
-
 app.controller('lpcontroller', function($scope, $http, $window) {
 
   $scope.ShowAlert = function () {
@@ -32,7 +17,6 @@ app.controller('lpcontroller', function($scope, $http, $window) {
         {
             method: 'post',
             headers: {
-              'Access-Control-Allow-Credentials': 'true',
               'Content-Type': 'application/json; charset=utf-8'
             },
             url:    'http://127.0.0.1:8080/rotinas.php?action=add_cliente',

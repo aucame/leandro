@@ -1,5 +1,19 @@
 <?php
 
+//header("Access-Control-Allow-Origin: *");
+//header("Access-Control-Allow-Credentials: true ");
+//header("Access-Control-Allow-Methods: OPTIONS, GET, POST");
+//header("Access-Control-Allow-Headers: Content-Type");
+
+	header("Access-Control-Allow-Origin: http://localhost");
+   header("Access-Control-Allow-Methods: POST");
+   header("Access-Control-Allow-Headers: Content-Type");
+//   header("Access-Control-Max-Age: 86400");
+//   if (strtolower($_SERVER['REQUEST_METHOD']) == 'options')
+//   {
+//      exit();
+//   }
+
 $bd = "teste";
 $server ="localhost";
 $user = "root";
@@ -19,9 +33,10 @@ switch($_GET['action']) {
 		$DBempresa = $data->empresa;
 		$DBsite    = $data->site;
 
-		$qry = 'INSERT INTO tanuncio(nome,email,telefone,empresa,site) values ("' . $DBnome . '","' . $DBemail . '","' .$DBfone . '","'.$DBempresa. '","'.$DBsite. '")';
-
-		$result = mysqli_query($conn, $qry);
+		if ($DBnome != '') {
+				$qry = 'INSERT INTO tanuncio(nome,email,telefone,empresa,site) values ("' . $DBnome . '","' . $DBemail . '","' .$DBfone . '","'.$DBempresa. '","'.$DBsite. '")';
+				$result = mysqli_query($conn, $qry);
+		}
 		break;
 
 	case 'email' :
@@ -37,13 +52,16 @@ switch($_GET['action']) {
 		break;
 
 	case 'get_cliente' :
-
+//echo 'passei';
 		$qry = mysqli_query($conn, 'SELECT * from tanuncio');
 
 		$data = array();
 
 		while($rows = mysqli_fetch_array($qry))
 		{
+
+//echo $rows['nome'];
+
 			$data [] = array(
 			"nome" => $rows['nome'],
 			"email" => $rows['email'],
